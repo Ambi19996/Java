@@ -97,6 +97,7 @@ public class TicTacToe {
 
 
 	public static boolean gameOver(int rmove, int cmove) {
+		
 
 		/*we check perpendicular*/
 		if (board[0][cmove] == board[1][cmove] && board[0][cmove] == board[2][cmove])

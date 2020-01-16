@@ -166,20 +166,22 @@ Map<String,Float>map=new HashMap<String,Float>();
 	}
 	
 	/*logic for coupon number*/
-	public static Map<Integer, Integer> RepatedNotAllowedCoupon(int[] arr, Map<Integer, Integer> map) {
-		Random ran=new Random();
-		
-		for (int i = 0; i < arr.length; i++) {
-			int random_value=ran.nextInt(10);
-			if(map.containsKey(random_value)) {
-				map.put(random_value,1);
+	public static HashSet<Integer> RepatedNotAllowedCoupon(int number, HashSet<Integer>set) {
+		int count=0;
+		int dist=number;
+		while(number>0) {
+			boolean tag=false;
+			count=count+1;
+			int coupon=(int)(Math.random()*10);
+			System.out.println("coupon is" + coupon);
+			tag=set.add(coupon);
+			if (tag==false) {
+				number=number+1;
 			}
-			else {
-				map.remove(random_value, 1);
-			}		}
+			number=number-1;
+		}
 		
-		
-		return map;
+		return set;
 	}
 	/*to calc the hour,sec,min,nanosec in using hashmap
 	 * to comapaer two string to statup and stopdown*/
