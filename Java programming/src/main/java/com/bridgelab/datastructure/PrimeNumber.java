@@ -1,47 +1,48 @@
 package com.bridgelab.datastructure;
 
+import java.util.Scanner;
+
+import com.bridgelabz.utility.utility;
+import com.bridgelabz.utility.utilitylogi;
+
 public class PrimeNumber {
 
 	public static void main(String[] args) {
-int max=200;
-boolean pnumber=true;
-String primenumber="";
-String result=primeNumberOrNot(max,pnumber,primenumber);
-System.out.println(" " + result);
-int print=arrayof100(result);
-	}
+		System.out.println("Enter the row: ");
+		int row = utility.inputinteger();
+		System.out.println("Enter the columns: ");
+		int columns = utility.inputinteger();
 
-	private static int arrayof100(String result) {
-		int start=0;
-		int end=100;
-		
-		
-		return 0;
-		
-	}
+		int arr[][] = new int[row][columns];
 
-	private static String primeNumberOrNot(int max, boolean pnumber, String primenumber) {
-		
-		for (int i = 1; i <= max; i++) {
-			
-				pnumber=checkPrime(i);
-				if (pnumber) {
-					primenumber=primenumber+i;
-		}
-		}
-		
-		return primenumber;
-	}
+		int temparr[] = new int[columns * row];
 
-	private static boolean checkPrime(int checknumber) {
-		int temp;
-		for (int j = 2; j <= checknumber/2; j++) {
-		temp=checknumber%j;
-		if (temp==0) {
-			return false;
+		int i = 0;
+		int k = 1;
+		int j;
+		/* check the prime number its is correct store in array */
+		while (i < row * columns) {
+			if (utilitylogi.isPrime(k) == true) {
+				temparr[i] = k;
+				i++;
+			}
+			k++;
 		}
-		}
-		return true;
-	}
 
+		int x = 0;
+
+		for (int j2 = 0; j2 < row; j2++) {
+			for (int l = 0; l < columns; l++) {
+				arr[j2][l] = temparr[x];
+				x++;
+			}
+		}
+		/* printing statements 2 d array */
+		for (int l = 0; l < row; l++) {
+			for (int l2 = 0; l2 < columns; l2++) {
+				System.out.print(arr[l][l2] + " \t");
+			}
+			System.out.println();
+		}
+	}
 }

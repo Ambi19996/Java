@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Random;
 
 import com.bridgelab.algorithm.PrimeNumber;
-import com.bridgelab.datastructure.Stack.Node;
 
 public class utilitylogi {
 
@@ -403,72 +402,200 @@ public class utilitylogi {
 		return list;
 	}
 
-	
-	//logic for balance Parentheses
+	// logic for balance Parentheses
 	public static boolean checkBalanceOrnot(char[] balance) {
-		 for(char word:balance) {
-       	  if ((word=='(')||(word=='{')||(word=='[')) {
-       		  push(word);  //the condition is correct push the character
- 			}
-       	  else if (word==')') {
-				if (peek()=='(') {
-					char r=pop();    //the condition is correct pop the character
+		for (char word : balance) {
+			if ((word == '(') || (word == '{') || (word == '[')) {
+				push(word); // the condition is correct push the character
+			} else if (word == ')') {
+				if (peek() == '(') {
+					char r = pop(); // the condition is correct pop the character
 					System.out.println("value of RRR:" + r);
 				}
-							}
-       	  
-       	  else if (word=='}') {
-					if (peek()=='{') {
-						pop();
-					}
+			}
+
+			else if (word == '}') {
+				if (peek() == '{') {
+					pop();
 				}
-       	  
-       	  else if (word==']') {
-					if (peek()=='[') {
-						pop();
-					}
-				}  	         	  
-         }
-	if (head==null) {
-		return true;
+			}
+
+			else if (word == ']') {
+				if (peek() == '[') {
+					pop();
+				}
+			}
+		}
+		if (head == null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
-	else {
+
+	public static class Node { // create the node class
+		char data;
+		Node next;
+		public Object prev;
+	}
+
+	static Node head;
+	private static Node front;
+	private static Node rear;
+
+	public static char pop() { // pop condition method
+		char node = head.data;
+		head = head.next;
+		return node;
+
+	}
+
+	public static char peek() { // peek condition method
+		System.out.println("current head " + head.data);
+
+		return head.data;
+	}
+
+	public static void push(char word) {
+		Node node = new Node();
+		node.data = word;
+		node.next = null;
+
+		if (head == null) {
+			head = node;
+		} else {
+			node.next = head;
+			head = node;
+		}
+
+	}
+
+	public static boolean ckeckPalindrome(String user) {
+
+		for (int i = 0; i < user.length(); i++) {
+
+			Node node = new Node();
+			node.data = user.charAt(i);
+			node.next = front;
+			node.prev = null;
+
+			if (front == null) {
+				front = node;
+				rear = node;
+
+			} else {
+				Node currnet = rear;
+				currnet.next = node;
+				rear = node;
+				return true;
+			}
+
+		}
+
 		return false;
 	}
-}
 
-public static class Node{     //create the node class
-	char data;
-	Node next;
-}
- static Node head;
-public static char pop() {     //pop condition method
-	char node=head.data;
-	head=head.next;
-	return node;
+	public static int[][] primeNumber2d(int start, int end) {
+		int c = 0;
+		int row = (int) Math.ceil(end / 100);
+		System.out.println("row is : " + row);
+		ArrayList<Integer> list = new ArrayList<Integer>();
 
-}
+		for (int i = start; i <= end; i++) {
+			c = 0;
+			for (int j = 2; j <= i; j++) {
+				if (i % j == 0) {
+					c++;
 
-public static char peek() {  //peek condition method
-	System.out.println("current head " + head.data);
-	
-	return head.data;
-}
-
-public static void push(char word) {
-	Node node=new Node();
-	node.data=word;
-	node.next=null;
-	
-	if (head==null) {
-		head=node;
 				}
-	else {
-		node.next=head;
-		head=node;
-	}		
+				if (c == 2) {
+					list.add(i);
 
-	
+				}
+			}
+		}
+		int[][] td = store2D(list, row);
+		return null;
+
+	}
+
+	private static int[][] store2D(ArrayList<Integer> list, int row) {
+		int[][] array = new int[row][];
+		int intd = 0;
+		int columns_count = 0;
+		int start = 1;
+		int end = 100;
+
+		for (int i = 0; i < row; i++) {
+			ArrayList<Integer> lword = new ArrayList<Integer>();
+			columns_count = 0;
+			for (Integer li : list) {
+				if (li >= start && li <= end) {
+					lword.add(li);
+					columns_count++;
+
+				}
+
+			}
+			start = start + 100;
+			end = end + 100;
+			array[i] = new int[columns_count];
+			intd = 0;
+			for (Integer ss : lword) {
+				array[i][intd++] = ss;
+			}
+		}
+
+		return array;
+	}
+
+	public static void calenderofday(int month, int year, int[] no_Of_days, String[] name_of_month) {
+		System.out.println(name_of_month[month] + " " + year);
+		System.out.println();
+		System.out.println("S M T W TH F Sat");
+
+		int d = day(month, 1, year);
+		int dd = 1;
+
+		while (dd < no_Of_days[month]) {
+			if (dd == 1) {
+				for (int i = 0; i < d; i++)
+					System.out.print("  ");
+				for (int i = 0; i < 7 - d; i++)
+					System.out.print(dd++ + "  ");
+			} else {
+				int j = 0;
+				while (j < 7 && dd < no_Of_days[month]) {
+					System.out.print(dd++ + " ");
+					j++;
+				}
+
+			}
+			System.out.println();
+		}
+		System.out.println(no_Of_days[month]);
+	}
+
+	private static int day(int month, int i, int year) {
+		int y = year - (14 - month) / 12;
+		int x = y + y / 4 - y / 100 + y / 400;
+		int m = month + 12 * ((14 - month) / 12) - 2;
+		int d = (i + x + 31 * m / 12) % 7;
+
+		return d;
+	}
+
+	/* check condition prime number */
+	public static boolean isPrime(int k) {
+		int c = 0;
+		for (int i = 1; i <= k; i++) {
+			if (k % i == 0)
+				c++;
+		}
+		if (c == 2) {
+			return true;
+		}
+		return false;
 	}
 
 }
