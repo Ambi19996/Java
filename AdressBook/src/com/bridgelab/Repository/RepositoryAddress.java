@@ -1,8 +1,10 @@
 package com.bridgelab.Repository;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -10,6 +12,7 @@ import java.util.Arrays;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.bridgelab.model.Itemsaddress;
 
@@ -147,40 +150,54 @@ public class RepositoryAddress {
 		
 	}
 	//sorting method
-	public void sort(String path) {
-		JSONParser parser = new JSONParser();
-		
-		
-		try {
-			FileReader fr = new FileReader(path);
-
-			Object ob = parser.parse(fr);
-
-			JSONArray list = new JSONArray();
-			list = (JSONArray) ob;
-			String[] str = new String[list.size()];
-			System.out.println("kfdbmkgk" + list);
-
-		 for (int i = 0; i < list.size(); i++) {
-			JSONObject object=(JSONObject)list.get(i);
-			str[i]=(String) object.get("name");
+	public void sort(String path) throws FileNotFoundException, IOException, ParseException {
+		JSONArray list=(JSONArray)new JSONParser().parse(new FileReader(path));
+		JSONObject object=null;
+		String[] str=new String[list.size()];
+		JSONArray newlist=new JSONArray();
+		try
+		{
+		 for (int i = 0; i < list.size(); i++) 
+		 {
+			 object=(JSONObject)list.get(i);
+			str[i]=object.get("name").toString();
 			
-			}
+		}
 		 Arrays.sort(str);
+		 for (String dem:str) {
+			System.out.println("hfjbckjc : " + dem);
+		}
 		 
-		 for (String j:str) {
-			System.out.println(j);
+		 
+		 int ind=0;
+		 for (int i = 0; i < str.length; i++)
+		 {
+			ind=0;
+			
+			for (int j = 0; j < list.size(); j++) 
+			{
+				JSONObject obj=(JSONObject)list.get(j);
+				if (obj.get("name").toString().equalsIgnoreCase(str[i])==true) 
+				{
+					ind=j;	
+				}	
+			}
+			newlist.add(list.get(ind));
 		 }
 		 
+		
+		 FileWriter fw = new FileWriter(path);
+			PrintWriter pw = new PrintWriter(fw);
+			pw.println(newlist.toString());
+			pw.flush();
+			fw.close();
+			pw.close();
 		 
 		} catch (Exception e) {
 			System.out.println(e);
 		
 	    	
 		}
-		
-		
-		
 		
 		}
 	}

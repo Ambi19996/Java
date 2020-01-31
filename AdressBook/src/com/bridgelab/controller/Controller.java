@@ -1,12 +1,17 @@
 package com.bridgelab.controller;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
+
 import com.bridgelab.Repository.RepositoryAddress;
 import com.bridgelab.model.Itemsaddress;
 import com.bridgelab.utility.Utility;
 
 public class Controller {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, IOException, ParseException {
 		String exit = null;
 		String delete=null;
 
@@ -35,7 +40,7 @@ if (choice == 1) {
 		
 //		to call the delete method
 else if (choice==2) {
-			while(exit == null || exit.equalsIgnoreCase("yes"))
+			while(exit == null || exit.equalsIgnoreCase("yes")) {
 		
 			System.out.println(" to delete the person's details ");
 			System.out.println("Enter the person name to delete ");
@@ -46,7 +51,7 @@ else if (choice==2) {
 		System.out.println("to add another persson print yes ");
 		exit = Utility.inputString();
 		}
-	
+}
 	
 		
 //		to call the update method
