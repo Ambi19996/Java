@@ -1,0 +1,29 @@
+package com.bridgelaz.basicprogramming;
+
+public class PowerOfTest {
+
+	int exp=3;
+	int exp1=8;
+	int exp2=0;
+	int result=0,result1=0;
+	
+	
+	
+	@Before
+	
+	
+	public void checkExponent() 
+	{
+		result=Utility.power(exp);
+		result1=Utility.power(exp2);
+		assertTrue(exp>0); //checking exp Entered is positive
+		assertTrue(result>0);//check the ouput is more than 0
+		
+	}
+
+	@Test
+	public void powerTest() {
+		assertEquals(8, result, 0); //assertEquals method to check for positive integer
+		assertEquals(1,result1 ,0); //assertEquals method to check for 0
+	}
+}
